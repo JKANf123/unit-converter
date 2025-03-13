@@ -1,0 +1,50 @@
+import tkinter as tk
+from tkinter import ttk
+
+def convert():
+    try:
+        value = float(entry_value.get())
+        conversion_type = combo_box.get()
+
+        if conversion_type == "Кг → Фунты":
+            result = value * 2.20462
+        elif conversion_type == "Фунты → Кг":
+            result = value / 2.20462
+        elif conversion_type == "Метры → Мили":
+            result = value * 0.000621371
+        elif conversion_type == "Мили → Метры":
+            result = value / 0.000621371
+        elif conversion_type == "°C → °F":
+            result = (value * 9/5) + 32
+        elif conversion_type == "°F → °C":
+            result = (value - 32) * 5/9
+        else:
+            result = "Ошибка"
+
+        label_result.config(text=f"Результат: {round(result, 4)}")
+    except ValueError:
+        label_result.config(text="Введите число!")
+
+# Создание окна
+root = tk.Tk()
+root.title("Конвертер единиц")
+
+# Поле ввода
+entry_value = tk.Entry(root, width=10)
+entry_value.grid(row=0, column=1, padx=10, pady=10)
+
+# Выбор типа конверсии
+conversion_options = ["Кг → Фунты", "Фунты → Кг", "Метры → Мили", "Мили → Метры", "°C → °F", "°F → °C"]
+combo_box = ttk.Combobox(root, values=conversion_options)
+combo_box.grid(row=0, column=2, padx=10, pady=10)
+combo_box.current(0)
+
+# Кнопка конвертации
+button_convert = tk.Button(root, text="Конвертировать", command=convert)
+button_convert.grid(row=1, column=1, columnspan=2, pady=10)
+
+# Вывод результата
+label_result = tk.Label(root, text="Результат: ")
+label_result.grid(row=2, column=1, columnspan=2, pady=10)
+
+root.mainloop()
